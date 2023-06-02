@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace library_system_API.Models;
 
@@ -7,6 +8,7 @@ public partial class MasterBookInformation
 {
     public int Id { get; set; }
 
+    [StringLength(50, MinimumLength = 6)]
     public string Isbn { get; set; } = null!;
 
     public string? BookName { get; set; }
