@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="library_systemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="author_details">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="author_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="register_number" Type="Int32" />
+    <NavigationProperty Name="master_book_information" Relationship="Self.FK_master_book_information_author_details" FromRole="author_details" ToRole="master_book_information" />
+  </EntityType>
+  <EntityType Name="category_details">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="category_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="sub_category" Relationship="Self.FK__sub_categ__main___2D27B809" FromRole="category_details" ToRole="sub_category" />
+    <NavigationProperty Name="master_book_information" Relationship="Self.FK_master_book_information_category_details" FromRole="category_details" ToRole="master_book_information" />
+  </EntityType>
+  <EntityType Name="master_book_information">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="isbn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="book_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="category_id" Type="Int32" />
+    <Property Name="sub_category_id" Type="Int32" />
+    <Property Name="author_id" Type="Int32" />
+    <Property Name="published_year" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="author_details" Relationship="Self.FK_master_book_information_author_details" FromRole="master_book_information" ToRole="author_details" />
+    <NavigationProperty Name="category_details" Relationship="Self.FK_master_book_information_category_details" FromRole="master_book_information" ToRole="category_details" />
+    <NavigationProperty Name="sub_category" Relationship="Self.FK__master_bo__sub_c__2A4B4B5E" FromRole="master_book_information" ToRole="sub_category" />
+  </EntityType>
+  <EntityType Name="sub_category">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="main_category_id" Type="Int32" />
+    <Property Name="sub_category_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="category_details" Relationship="Self.FK__sub_categ__main___2D27B809" FromRole="sub_category" ToRole="category_details" />
+    <NavigationProperty Name="master_book_information" Relationship="Self.FK__master_bo__sub_c__2A4B4B5E" FromRole="sub_category" ToRole="master_book_information" />
+  </EntityType>
+  <Association Name="FK_master_book_information_author_details">
+    <End Role="author_details" Type="Self.author_details" Multiplicity="0..1" />
+    <End Role="master_book_information" Type="Self.master_book_information" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="author_details">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="master_book_information">
+        <PropertyRef Name="author_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__sub_categ__main___2D27B809">
+    <End Role="category_details" Type="Self.category_details" Multiplicity="0..1" />
+    <End Role="sub_category" Type="Self.sub_category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category_details">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="sub_category">
+        <PropertyRef Name="main_category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_master_book_information_category_details">
+    <End Role="category_details" Type="Self.category_details" Multiplicity="0..1" />
+    <End Role="master_book_information" Type="Self.master_book_information" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category_details">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="master_book_information">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__master_bo__sub_c__2A4B4B5E">
+    <End Role="sub_category" Type="Self.sub_category" Multiplicity="0..1" />
+    <End Role="master_book_information" Type="Self.master_book_information" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sub_category">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="master_book_information">
+        <PropertyRef Name="sub_category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="library_systemEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="author_details" EntityType="Self.author_details" />
+    <EntitySet Name="category_details" EntityType="Self.category_details" />
+    <EntitySet Name="master_book_information" EntityType="Self.master_book_information" />
+    <EntitySet Name="sub_category" EntityType="Self.sub_category" />
+    <AssociationSet Name="FK_master_book_information_author_details" Association="Self.FK_master_book_information_author_details">
+      <End Role="author_details" EntitySet="author_details" />
+      <End Role="master_book_information" EntitySet="master_book_information" />
+    </AssociationSet>
+    <AssociationSet Name="FK__sub_categ__main___2D27B809" Association="Self.FK__sub_categ__main___2D27B809">
+      <End Role="category_details" EntitySet="category_details" />
+      <End Role="sub_category" EntitySet="sub_category" />
+    </AssociationSet>
+    <AssociationSet Name="FK_master_book_information_category_details" Association="Self.FK_master_book_information_category_details">
+      <End Role="category_details" EntitySet="category_details" />
+      <End Role="master_book_information" EntitySet="master_book_information" />
+    </AssociationSet>
+    <AssociationSet Name="FK__master_bo__sub_c__2A4B4B5E" Association="Self.FK__master_bo__sub_c__2A4B4B5E">
+      <End Role="sub_category" EntitySet="sub_category" />
+      <End Role="master_book_information" EntitySet="master_book_information" />
+    </AssociationSet>
+    <FunctionImport Name="SelectallBooks" ReturnType="Collection(library_systemModel.SelectallBooks_Result)" />
+  </EntityContainer>
+  <ComplexType Name="SelectallBooks_Result">
+    <Property Type="Int32" Name="id" Nullable="false" />
+    <Property Type="String" Name="isbn" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="book_name" Nullable="true" MaxLength="255" />
+    <Property Type="Int32" Name="category_id" Nullable="true" />
+    <Property Type="Int32" Name="sub_category_id" Nullable="true" />
+    <Property Type="Int32" Name="author_id" Nullable="true" />
+    <Property Type="DateTime" Name="published_year" Nullable="true" />
+  </ComplexType>
+</Schema>

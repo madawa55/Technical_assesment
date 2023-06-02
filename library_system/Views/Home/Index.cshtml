@@ -1,0 +1,32 @@
+﻿
+@model IEnumerable<library_system.Models.master_book_information>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+    <section class="row" aria-labelledby="aspnetTitle">
+        <h1 id="title">Library System</h1>
+        <p><a href="~/Home/DataViewEF" class="btn btn-primary btn-md">Data Load From EF</a></p>
+        <p><a href="~/Home/DataViewSP" class="btn btn-primary btn-md">Data Load From SP</a></p>
+        <p><a href="~/Home/DropDownPage" class="btn btn-primary btn-md">Drop Down Function</a></p>
+        <p><a href="https://localhost:7100/swagger/index.html" class="btn btn-primary btn-md">Data API</a></p>
+        <p><a href="~/Home/ManageStackExchangeQiz" class="btn btn-primary btn-md">Data Load From External API</a></p>
+        <p><a href="~/Home/FunctionwithVanillaJS" class="btn btn-primary btn-md">Vannilla js</a></p>
+
+
+
+    </section>
+
+    <div class="row">
+        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
+            <h2 id="gettingStartedTitle">Getting started</h2>
+
+            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        </section>
+        <section class="col-md-4" aria-labelledby="librariesTitle">
+        </section>
+        <section class="col-md-4" aria-labelledby="hostingTitle">
+        </section>
+    </div>
+</main>

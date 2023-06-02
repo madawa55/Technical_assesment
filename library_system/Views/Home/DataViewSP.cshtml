@@ -1,0 +1,30 @@
+﻿@model IEnumerable<library_system.Models.SelectallBooks_Result>
+@{
+    ViewBag.Title = "DataViewSP";
+}
+
+<h2>DataViewSP</h2>
+
+<div><b>Showing Data using Stored Procedure</b><br /></div>
+<table class="table table-bordered table-responsive table-hover">
+    <tr>
+        <th>Id</th>
+        <th>ISBN</th>
+        <th>Book Name</th>
+        <th>Category</th>
+        <th>Sub Category</th>
+        <th>Author</th>
+    </tr>
+    @foreach (var d in Model)
+    {
+        <tr>
+            <td>@d.id</td>
+            <td>@d.isbn</td>
+            <td>@d.book_name</td>
+            <td>@d.category_id</td>
+            <td>@d.sub_category_id</td>
+            <td>@d.author_id</td>
+        </tr>
+
+    }
+</table>  

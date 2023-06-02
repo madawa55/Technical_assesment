@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "DropDownPage";
+}
+
+<h2>DropDownPage</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Category</h2>
+        @Html.DropDownList("id", ViewBag.category_data as SelectList, "Select Category", new { @id = "Category", @class = "form-control" })
+    </div>
+    <div class="col-md-4">
+        <h2>Sub Category</h2>
+        @Html.DropDownList("id", ViewBag.category_data as SelectList, "Select Category", new { @id = "SubCategory", @class = "form-control" })
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#Category').change(function () {
+            $.ajax({
+                type: "post",
+                url: "/Home/GetSubcategory",
+                data: { id: $('#Category').val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var response = JSON.parse(data);                  
+                    var subcat = "<select id='SubCategory'>";
+                    subcat = subcat + '<option value="">--Select--</option>';
+                    for (var i = 0; i < response.length; i++) {
+                        subcat = subcat + '<option value=' + response[i].id + '>' + response[i].sub_category_name + '</option>';
+                    }
+                    subcat = subcat + '</select>';
+                    $('#SubCategory').html(subcat);
+                }
+            });
+        }); 
+    });
+</script>  
