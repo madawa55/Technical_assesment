@@ -13,7 +13,6 @@ namespace library_system.Controllers
 {
     public class HomeController : Controller
     {
-        private const string StackOverflowApiUrl = "https://api.stackexchange.com/2.3";
         public ActionResult Index()
         {
 
@@ -54,8 +53,9 @@ namespace library_system.Controllers
 
         public async Task<ActionResult> ManageStackExchangeQiz()
         {
-            List<Question> questions = await GetQuestions();
-            return View("QuestionsList", questions);
+            Repository.Repository repo = new Repository.Repository();
+            List<Question> questions = await repo.GetQuestions();
+            return View(questions);
         }
 
         public ActionResult FunctionwithVanillaJS()
@@ -68,69 +68,13 @@ namespace library_system.Controllers
 
         public async Task<ActionResult> Details(int questionId)
         {
-            Question question = await GetQuestionDetails(questionId);
-            return View("QuestionDetails", question);
-        }
-
-        private async Task<List<Question>> GetQuestions()
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                HttpResponseMessage response = await client.GetAsync("https://api.stackexchange.com/2.3/questions?pagesize=50&order=desc&sort=creation&site=stackoverflow");
-                
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    return null;
-                }
-
-                // Handle API error
-                throw new Exception($"Failed to retrieve questions. Error: {response}");
-            }
-        }
-
-        private async Task<Question> GetQuestionDetails(int questionId)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                HttpResponseMessage response = await client.GetAsync($"{StackOverflowApiUrl}/questions/{questionId}?order=desc&sort=activity&site=stackoverflow");
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                if (response.IsSuccessStatusCode)
-                {
-                    QuestionDetailsResponse questionResponse = JsonConvert.DeserializeObject<QuestionDetailsResponse>(responseBody);
-                    return questionResponse.Items.FirstOrDefault();
-                }
-
-                // Handle API error
-                throw new Exception($"Failed to retrieve question details. Error: {responseBody}");
-            }
+            Repository.Repository repo = new Repository.Repository();
+            Question question = await repo.GetQuestionDetails(questionId);
+            return View( question);
         }
 
 
+
     }
 
-    public class QuestionsResponse
-    {
-        [JsonProperty("items")]
-        public List<Question> Items { get; set; }
-    }
-
-    public class QuestionDetailsResponse
-    {
-        [JsonProperty("items")]
-        public List<Question> Items { get; set; }
-    }
-
-    public class Question
-    {
-        [JsonProperty("question_id")]
-        public int QuestionId { get; set; }
-
-        [JsonProperty("title")]
-        public string Title { get; set; }
-
-        
-    }
 }

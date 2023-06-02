@@ -167,6 +167,9 @@
     <Compile Include="Models\master_book_information.cs">
       <DependentUpon>MainModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\QuestionDetailsResponse.cs" />
+    <Compile Include="Models\QuestionsResponse.cs" />
     <Compile Include="Models\SelectallBooks_Result.cs">
       <DependentUpon>MainModel.tt</DependentUpon>
     </Compile>
@@ -252,6 +255,7 @@
     <Content Include="Views\Home\DropDownPage.cshtml" />
     <Content Include="Views\Home\ManageStackExchangeQiz.cshtml" />
     <Content Include="Views\Home\FunctionwithVanillaJS.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
